@@ -51,7 +51,7 @@
 			for (let i = 0; i < 3; i++) {
 				const im = new Image();
 				im.decoding = "async";
-				im.src = `${base}hero-bulbs-${g}-${i}.webp`;
+				im.src = `${base}hero-bulbs-${g}-${i}.webp?v=2`;
 				layers.bulbs[g].push(im);
 			}
 		}
