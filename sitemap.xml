@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+	<url>
+		<loc>https://just-one-more-bet-web.vercel.app/</loc>
+		<xhtml:link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en"/>
+	</url>
+	<url>
+		<loc>https://just-one-more-bet-web.vercel.app/en</loc>
+		<xhtml:link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en"/>
+	</url>
+	<url>
+		<loc>https://just-one-more-bet-web.vercel.app/privacidad</loc>
+		<xhtml:link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/privacidad"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en/privacy"/>
+	</url>
+	<url>
+		<loc>https://just-one-more-bet-web.vercel.app/en/privacy</loc>
+		<xhtml:link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/privacidad"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en/privacy"/>
+	</url>
+	<url>
+		<loc>https://just-one-more-bet-web.vercel.app/creditos</loc>
+		<xhtml:link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/creditos"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en/credits"/>
+	</url>
+	<url>
+		<loc>https://just-one-more-bet-web.vercel.app/en/credits</loc>
+		<xhtml:link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/creditos"/>
+		<xhtml:link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en/credits"/>
+	</url>
+</urlset>

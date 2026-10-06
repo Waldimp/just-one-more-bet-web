@@ -1,0 +1,2 @@
+Los trailers van aqui: trailer_es.mp4 y trailer_en.mp4 (H.264, 1920x1080 o 1280x720).
+No se versionan videos pesados en git sin pensarlo; ver README.md, seccion Trailer.

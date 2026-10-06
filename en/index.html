@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<title>Just One More Bet · Just one more</title>
+	<meta name="description" content="You got out of prison owing more. Pay off an impossible debt by betting in a pixel art casino: 150 seconds and 3 bets a day, and the collector at the end. An 18+ roguelite with simulated gambling and no real money.">
+	<link rel="canonical" href="https://just-one-more-bet-web.vercel.app/en">
+	<link rel="alternate" hreflang="es" href="https://just-one-more-bet-web.vercel.app/">
+	<link rel="alternate" hreflang="en" href="https://just-one-more-bet-web.vercel.app/en">
+	<link rel="alternate" hreflang="x-default" href="https://just-one-more-bet-web.vercel.app/">
+	<meta name="theme-color" content="#130d10">
+	<meta name="color-scheme" content="dark">
+	<meta name="rating" content="adult">
+
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Just One More Bet">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:locale:alternate" content="es_LA">
+	<meta property="og:title" content="Just One More Bet · Just one more">
+	<meta property="og:description" content="A pixel art casino roguelite: pay off an impossible debt with 150 seconds and 3 bets a day. 18+, simulated gambling, no real money.">
+	<meta property="og:url" content="https://just-one-more-bet-web.vercel.app/en">
+	<meta property="og:image" content="https://just-one-more-bet-web.vercel.app/assets/img/og/og-en.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="The casino entrance at night: a giant golden lion whose mouth is the door, next to the Las Vegas sign, under the title Just One More Bet.">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Just One More Bet · Just one more">
+	<meta name="twitter:description" content="A pixel art casino roguelite: pay off an impossible debt with 150 seconds and 3 bets a day. 18+, no real money.">
+	<meta name="twitter:image" content="https://just-one-more-bet-web.vercel.app/assets/img/og/og-en.png">
+	<meta name="twitter:image:alt" content="The casino entrance at night: a giant golden lion whose mouth is the door.">
+
+	<link rel="icon" href="/favicon.ico" sizes="48x48">
+	<link rel="icon" href="/assets/img/icons/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="preload" href="/assets/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="/assets/img/hero/hero-back.png" as="image" fetchpriority="high">
+	<link rel="stylesheet" href="/assets/css/site.css">
+	<script src="/assets/js/boot.js"></script>
+	<script src="/assets/js/site.js" defer></script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "VideoGame",
+		"name": "Just One More Bet",
+		"url": "https://just-one-more-bet-web.vercel.app/en",
+		"image": "https://just-one-more-bet-web.vercel.app/assets/img/og/og-en.png",
+		"description": "A risk-management roguelite with a casino theme, in pixel art. Simulated gambling, no real money. For adults (18+).",
+		"inLanguage": "es",
+		"genre": ["Roguelite", "Casino", "Pixel art"],
+		"gamePlatform": ["Windows", "Android", "Web browser"],
+		"playMode": "SinglePlayer",
+		"contentRating": "18+",
+		"author": [
+			{ "@type": "Person", "name": "Walter Daniel Mejía Palacios" },
+			{ "@type": "Person", "name": "Samuel Fernando Calderón Reyes" }
+		]
+	}
+	</script>
+</head>
+<body>
+	<a class="skip-link" href="#contenido">Skip to content</a>
+
+	<header class="topbar">
+		<div class="topbar__inner">
+			<a class="brand" href="/en" aria-label="Just One More Bet, home">
+				<img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated">
+				<span class="brand__name">JUST ONE MORE BET</span>
+			</a>
+			<nav class="topbar__nav" aria-label="Sections">
+				<a href="#premise">The premise</a>
+				<a href="#trailer">Trailer</a>
+				<a href="#how-to-play">How to play</a>
+				<a href="#casino">The casino</a>
+			</nav>
+			<div class="lang" role="group" aria-label="Language">
+				<a href="/" hreflang="es" lang="es">ES</a>
+				<span aria-current="true" lang="en">EN</span>
+			</div>
+			<a class="btn btn--small" href="#ITCH_URL">Play</a>
+		</div>
+	</header>
+
+	<main id="contenido">
+		<!-- ============================================================ HERO -->
+		<section class="hero" id="top" aria-labelledby="titulo" data-art="/assets/img/hero/">
+			<div class="hero__sticky">
+				<div class="hero__scene" aria-hidden="true">
+					<div class="hero__layers">
+						<img class="l-back" src="/assets/img/hero/hero-back.png" width="960" height="1088" style="--w:960" alt="" fetchpriority="high">
+						<img class="l-mid l-sign" src="/assets/img/hero/hero-sign.png" width="640" height="1088" style="--w:640" alt="">
+						<img class="l-mid l-front" src="/assets/img/hero/hero-front.png" width="640" height="1088" style="--w:640" alt="">
+					</div>
+					<canvas class="hero__canvas"></canvas>
+					<div class="hero__shade"></div>
+				</div>
+
+				<div class="hero__copy">
+					<p class="hero__kicker">A roguelite of debt, risk and bad luck</p>
+					<h1 class="marquee-title" id="titulo">
+						<span class="w" style="--i:0">Just</span> <span class="w" style="--i:1">One</span><span class="br"></span> <span class="w w--lazy" style="--i:2">More</span> <span class="w" style="--i:3">Bet</span>
+					</h1>
+					<p class="hero__tagline">Just one more.</p>
+					<div class="hero__ctas">
+						<a class="btn btn--play" href="#ITCH_URL">
+							Play on itch.io
+							<span class="lever" aria-hidden="true"><span class="lever__base"></span><span class="lever__arm"></span></span>
+						</a>
+						<a class="btn btn--ghost" href="#trailer">Watch the trailer</a>
+					</div>
+					<p class="rating"><span class="rating__age">18+</span> Contains simulated gambling, alcohol and tobacco. No real money.</p>
+				</div>
+
+				<a class="hero__enter" href="#premise">
+					Enter
+					<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M4 0h2v5h2v1H7v1H6v1H4V7H3V6H2V5h2z"/></svg>
+				</a>
+				<div class="hero__curtain" aria-hidden="true"></div>
+			</div>
+		</section>
+
+		<!-- ============================================================ PREMISE -->
+		<section class="section premise" id="premise" aria-labelledby="premise-title">
+			<div class="wrap">
+				<header class="section__head">
+					<p class="kicker"><span class="reel" aria-hidden="true" data-pin="16"><span class="reel__strip" style="--stop:0"><i style="--x:0;--y:2"></i></span></span> The premise</p>
+					<h2 id="premise-title" class="reveal">You got out of prison owing more.</h2>
+					<p class="lede reveal" style="--d:1">Nobody will hire you. A loan shark offers you a loan at “reasonable interest”. The only door still open is a casino’s.</p>
+				</header>
+
+				<div class="story">
+					<figure class="story__panel reveal">
+						<button class="frame zoomable" type="button" data-full="/assets/img/shots/historia-1.webp" data-caption="Three years for owing money. I got out owing more.">
+							<img src="/assets/img/shots/historia-1.webp" srcset="/assets/img/shots/historia-1-1x.webp 640w, /assets/img/shots/historia-1.webp 1280w" sizes="(max-width: 700px) 100vw, 600px" width="1280" height="720" loading="lazy" decoding="async" alt="A prison wall at dawn, topped with barbed wire. The gate is open and the main character walks out holding a bag.">
+						</button>
+						<figcaption><b>01</b><span><span>Three years for owing money.</span><span>I got out owing more.</span></span></figcaption>
+					</figure>
+					<figure class="story__panel reveal" style="--d:1">
+						<button class="frame zoomable" type="button" data-full="/assets/img/shots/historia-2.webp" data-caption="I looked for honest work. Honest wasn’t hiring.">
+							<img src="/assets/img/shots/historia-2.webp" srcset="/assets/img/shots/historia-2-1x.webp 640w, /assets/img/shots/historia-2.webp 1280w" sizes="(max-width: 700px) 100vw, 600px" width="1280" height="720" loading="lazy" decoding="async" alt="A street of shops with their shutters down and “No vacancies” signs. The main character walks past them.">
+						</button>
+						<figcaption><b>02</b><span><span>I looked for honest work.</span><span>Honest wasn’t hiring.</span></span></figcaption>
+					</figure>
+					<figure class="story__panel reveal">
+						<button class="frame zoomable" type="button" data-full="/assets/img/shots/historia-3.webp" data-caption="Until someone found me: “I can help. Reasonable interest.”">
+							<img src="/assets/img/shots/historia-3.webp" srcset="/assets/img/shots/historia-3-1x.webp 640w, /assets/img/shots/historia-3.webp 1280w" sizes="(max-width: 700px) 100vw, 600px" width="1280" height="720" loading="lazy" decoding="async" alt="A brick alley at night, under a street lamp and a CASINO neon sign. A bald man in dark glasses walks up to the main character.">
+						</button>
+						<figcaption><b>03</b><span><span>Until someone found me.</span><span>“I can help. Reasonable interest.”</span></span></figcaption>
+					</figure>
+					<figure class="story__panel reveal" style="--d:1">
+						<button class="frame zoomable" type="button" data-full="/assets/img/shots/historia-4.webp" data-caption="I signed a number. He gave me ₡500 and a casino card.">
+							<img src="/assets/img/shots/historia-4.webp" srcset="/assets/img/shots/historia-4-1x.webp 640w, /assets/img/shots/historia-4.webp 1280w" sizes="(max-width: 700px) 100vw, 600px" width="1280" height="720" loading="lazy" decoding="async" alt="In the alley, the loan shark hands the main character an envelope and a casino card.">
+						</button>
+						<figcaption><b>04</b><span><span>I signed a number.</span><span>He gave me ₡500 and a casino card.</span></span></figcaption>
+					</figure>
+				</div>
+
+				<div class="deal">
+					<div class="deal__text">
+						<h3 class="reveal">Nobody says “reasonable” when it is.</h3>
+						<p class="reveal" style="--d:1">You get ₡500. You pay back ₡88,888,000, in 15 installments that climb like a staircase: ₡1,000, ₡2,000, ₡5,000… up to ₡50,000,000. Each installment gives you three days.</p>
+						<p class="punch reveal" style="--d:2">On the last day of an installment, you pay it in full or that’s as far as you go.</p>
+						<div class="ladder">
+							<p class="visually-hidden">The 15 installments go from ₡1,000 to ₡50,000,000.</p>
+							<ol class="ladder__bars" aria-hidden="true"><li style="--h:6.9;--i:0"></li><li style="--h:12.9;--i:1"></li><li style="--h:20.8;--i:2"></li><li style="--h:26.7;--i:3"></li><li style="--h:32.7;--i:4"></li><li style="--h:40.6;--i:5"></li><li style="--h:46.5;--i:6"></li><li style="--h:52.5;--i:7"></li><li style="--h:60.4;--i:8"></li><li style="--h:66.4;--i:9"></li><li style="--h:72.3;--i:10"></li><li style="--h:80.2;--i:11"></li><li style="--h:86.2;--i:12"></li><li style="--h:92.1;--i:13"></li><li style="--h:100.0;--i:14"></li></ol>
+							<p class="ladder__legend" aria-hidden="true"><span>₡1,000</span><span>15 installments · 3 days each</span><span>₡50,000,000</span></p>
+						</div>
+					</div>
+
+					<article class="contract panel" aria-label="The loan contract">
+						<div class="contract__head">
+							<div>
+								<p class="contract__title">LOAN</p>
+								<p class="contract__terms">TERMS: THEIRS</p>
+							</div>
+							<span class="contract__stamp" aria-hidden="true">APPROVED</span>
+						</div>
+						<dl>
+							<dt>YOU GET</dt>
+							<dd>₡500</dd>
+							<dt>YOU OWE</dt>
+							<dd class="owed"><span class="odometer" data-text="₡88,888,000">₡88,888,000</span></dd>
+							<dt>INTEREST</dt>
+							<dd>REASONABLE</dd>
+						</dl>
+						<dl class="contract__sign">
+							<dt>SIGNATURE</dt>
+							<dd>
+								<svg viewBox="0 0 260 56" aria-hidden="true"><path d="M6 44 L18 16 L26 46 L38 12 L50 42 L58 28 L74 32 L84 10 L96 44 L108 20 L122 38 L136 22 L150 34 L170 26 L196 30 L222 24 L254 28"/></svg>
+								<span class="visually-hidden">Signed</span>
+							</dd>
+						</dl>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============================================================ TRAILER -->
+		<section class="section trailer" id="trailer" aria-labelledby="trailer-title">
+			<div class="wrap">
+				<header class="section__head section__head--center">
+					<p class="kicker"><span class="reel" aria-hidden="true" data-pin="17"><span class="reel__strip" style="--stop:0"><i style="--x:1;--y:2"></i></span></span> Trailer</p>
+					<h2 id="trailer-title" class="reveal">Every night he comes for his cut.</h2>
+				</header>
+
+				<!-- TRAILER: el video vive en /media/trailer_en.mp4 (no esta en el repo hasta que exista).
+				     El poster es una captura real del juego. preload="none": no se descarga nada hasta
+				     que alguien pulsa reproducir. -->
+				<div class="screen" data-soon="The trailer is coming soon">
+					<div class="screen__inner">
+						<video controls preload="none" playsinline poster="/assets/img/shots/poster-trailer.webp" aria-label="Just One More Bet trailer">
+							<source src="/media/trailer_en.mp4" type="video/mp4">
+						</video>
+						<img class="screen__poster" src="/assets/img/shots/poster-trailer.webp" width="1280" height="720" loading="lazy" decoding="async" alt="">
+						<button class="screen__play" type="button">
+							<span class="chip-play" aria-hidden="true"><svg viewBox="0 0 8 10" shape-rendering="crispEdges"><path fill="#fffce5" d="M0 0h2v1h2v1h2v1h2v4H6v1H4v1H2v1H0z"/></svg></span>
+							<span class="screen__label">Play trailer</span>
+						</button>
+						<p class="screen__note" hidden>The trailer is in production. Meanwhile, take a look at the casino below.</p>
+					</div>
+				</div>
+				<p class="trailer__meta">The video only downloads when you play it. It has sound.</p>
+			</div>
+		</section>
+
+		<div class="strip" aria-hidden="true"></div>
+
+		<!-- ============================================================ A DAY -->
+		<section class="section day" id="how-to-play" aria-labelledby="day-title">
+			<div class="wrap">
+				<header class="section__head">
+					<p class="kicker"><span class="reel" aria-hidden="true" data-pin="4"><span class="reel__strip" style="--stop:0"><i style="--x:4;--y:0"></i></span></span> How to play</p>
+					<h2 id="day-title" class="reveal">A day at the casino</h2>
+					<p class="lede reveal" style="--d:1">Every day is one turn of the clock: 150 seconds to move around, three bets to risk your money and, at the end, the collector.</p>
+				</header>
+
+				<div class="day__grid">
+					<aside class="hud panel" aria-hidden="true" data-seconds="150">
+						<div class="hud__row"><span class="hud__day">DAY 1</span><span class="hud__label">Time</span></div>
+						<p class="hud__clock">2:30</p>
+						<div class="hud__bar"><i></i></div>
+						<div class="hud__sep"></div>
+						<div class="hud__row hud__row--actions"><span class="hud__label">Bets</span><span class="hud__actions"><i class="hud__chip"></i><i class="hud__chip"></i><i class="hud__chip"></i></span></div>
+						<div class="hud__sep"></div>
+						<div class="hud__row hud__row--money"><span class="hud__label">Cash</span><span class="hud__money">₡500</span></div>
+						<div class="hud__row hud__row--debt"><span class="hud__label">Debt</span><span class="hud__debt">₡1,000</span></div>
+						<p class="hud__note">The clock runs even if you don’t play.</p>
+					</aside>
+
+					<ol class="steps">
+						<li class="step" data-note="The clock runs even if you don’t play.">
+							<span class="step__time">2:30 · THE CASINO OPENS</span>
+							<div class="step__head">
+								<h3>A hundred and fifty seconds</h3>
+							</div>
+							<p>Walking doesn’t cost bets, but the clock keeps running. Eating, going to the restroom or seeing the Brujo eat into it too. Learn the casino and you get to play more.</p>
+							<button class="frame zoomable reveal" type="button" data-full="/assets/img/shots/dia-salon.webp" data-caption="The main hall, with the clock, bets, cash and debt at the top.">
+								<img src="/assets/img/shots/dia-salon.webp" srcset="/assets/img/shots/dia-salon-1x.webp 640w, /assets/img/shots/dia-salon.webp 1280w" sizes="(max-width: 1000px) 100vw, 760px" width="1280" height="720" loading="lazy" decoding="async" alt="The casino’s main hall from above: red and blue carpet, roulette and blackjack tables, slot machines and people walking. At the top, the day, the clock, the bets left and the debt.">
+							</button>
+						</li>
+
+						<li class="step" data-note="Playing is the only thing that costs a bet.">
+							<span class="step__time">THREE BETS</span>
+							<div class="step__head">
+								<h3>Four tables, three bets</h3>
+							</div>
+							<p>Only playing costs a bet, and you get three a day. The ones you don’t use are lost. Every game has its own room, and it pays a little more there.</p>
+							<ul class="tables">
+								<li>
+									<figure class="table-card reveal" data-action data-money="₡380">
+										<button class="frame zoomable" type="button" data-full="/assets/img/shots/mesa-tragamonedas.webp" data-caption="Slots: the reels spinning.">
+											<img src="/assets/img/shots/mesa-tragamonedas-1x.webp" srcset="/assets/img/shots/mesa-tragamonedas-1x.webp 640w, /assets/img/shots/mesa-tragamonedas.webp 1280w" sizes="(max-width: 600px) 100vw, 380px" width="1280" height="720" loading="lazy" decoding="async" alt="A slot machine up close: three rows of reels spinning with cherries, sevens and bells, the pay table on the left and the bets on the right.">
+										</button>
+										<figcaption><strong>Slots</strong>The middle line rules. Two pairs, three of a kind, full house, four and five of a kind pay.</figcaption>
+									</figure>
+								</li>
+								<li>
+									<figure class="table-card reveal" style="--d:1" data-action data-money="₡1,160">
+										<button class="frame zoomable" type="button" data-full="/assets/img/shots/mesa-ruleta.webp" data-caption="Roulette: the ball spinning and the chips on the felt.">
+											<img src="/assets/img/shots/mesa-ruleta-1x.webp" srcset="/assets/img/shots/mesa-ruleta-1x.webp 640w, /assets/img/shots/mesa-ruleta.webp 1280w" sizes="(max-width: 600px) 100vw, 380px" width="1280" height="720" loading="lazy" decoding="async" alt="Roulette up close: the wheel spinning, the last number in large print and the felt with chips on numbers, dozens, color and odd or even.">
+										</button>
+										<figcaption><strong>Roulette</strong>Three chips per bet. Spreading them is calmer; stacking them, more thrilling.</figcaption>
+									</figure>
+								</li>
+								<li>
+									<figure class="table-card reveal">
+										<button class="frame zoomable" type="button" data-full="/assets/img/shots/mesa-blackjack.webp" data-caption="Blackjack: you have 20 and the house shows a 10.">
+											<img src="/assets/img/shots/mesa-blackjack-1x.webp" srcset="/assets/img/shots/mesa-blackjack-1x.webp 640w, /assets/img/shots/mesa-blackjack.webp 1280w" sizes="(max-width: 600px) 100vw, 380px" width="1280" height="720" loading="lazy" decoding="async" alt="A green-felt blackjack table: the house shows a 10 and a face-down card; the player has 20 with three cards. On the right, the Hit and Stand buttons.">
+										</button>
+										<figcaption><strong>Blackjack</strong>Hit or stand. The house stands on 17.</figcaption>
+									</figure>
+								</li>
+								<li>
+									<figure class="table-card reveal" style="--d:1" data-action data-money="₡2,540">
+										<button class="frame zoomable" type="button" data-full="/assets/img/shots/mesa-caballos.webp" data-caption="Horse racing: halfway through the race.">
+											<img src="/assets/img/shots/mesa-caballos-1x.webp" srcset="/assets/img/shots/mesa-caballos-1x.webp 640w, /assets/img/shots/mesa-caballos.webp 1280w" sizes="(max-width: 600px) 100vw, 380px" width="1280" height="720" loading="lazy" decoding="async" alt="A horse race seen from the side: five jockeys in colored silks gallop on a dirt track, with the grandstand, trees and a red barn in the background.">
+										</button>
+										<figcaption><strong>Horses</strong>Bet on one. The favorite pays little; the one nobody watches, a lot.</figcaption>
+									</figure>
+								</li>
+							</ul>
+						</li>
+
+						<li class="step" data-note="Talking to the Brujo costs time, not bets.">
+							<span class="step__time">BETWEEN TABLES</span>
+							<div class="step__head">
+								<span class="reel" aria-hidden="true" data-pin="7"><span class="reel__strip" style="--stop:0"><i style="--x:7;--y:0"></i></span></span>
+								<h3>The Brujo and his pins</h3>
+							</div>
+							<p>The Brujo, the casino’s fortune-teller, sees what today’s luck has already decided. He says it halfway, and sometimes he’s wrong. He also sells pins: they don’t work miracles, they cheat a little.</p>
+							<button class="frame zoomable reveal" type="button" data-full="/assets/img/shots/brujo.webp" data-caption="The Brujo, with his line of the day.">
+								<img src="/assets/img/shots/brujo.webp" srcset="/assets/img/shots/brujo-1x.webp 640w, /assets/img/shots/brujo.webp 1280w" sizes="(max-width: 1000px) 100vw, 760px" width="1280" height="720" loading="lazy" decoding="async" alt="The Brujo, a skeleton in a robe and bead necklace, sits behind a table with candles and a crystal ball, framed in gold. Below, his line of the day.">
+							</button>
+							<p>You can wear up to five on your shirt. Each pin’s card tells you what it does; how they combine, you learn by losing.</p>
+							<ul class="pins"><li><button class="pin" type="button" data-r="common" data-name="Crooked Clover" data-rarity="Common" style="--x:0;--y:0" aria-label="Crooked Clover (common)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="common" data-name="Coin Toss" data-rarity="Common" style="--x:1;--y:0" aria-label="Coin Toss (common)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="common" data-name="Loose Ace" data-rarity="Common" style="--x:2;--y:0" aria-label="Loose Ace (common)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Extra Chip" data-rarity="Unusual" style="--x:3;--y:0" aria-label="Extra Chip (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Pocket Watch" data-rarity="Unusual" style="--x:4;--y:0" aria-label="Pocket Watch (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Lead Deck" data-rarity="Rare" style="--x:5;--y:0" aria-label="Lead Deck (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Capital with Teeth" data-rarity="Rare" style="--x:6;--y:0" aria-label="Capital with Teeth (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="The Brujo's Candle" data-rarity="Rare" style="--x:7;--y:0" aria-label="The Brujo's Candle (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="forbidden" data-name="One-Colón Pin" data-rarity="Forbidden" style="--x:0;--y:1" aria-label="One-Colón Pin (forbidden)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="forbidden" data-name="Lever of a Single Faith" data-rarity="Forbidden" style="--x:1;--y:1" aria-label="Lever of a Single Faith (forbidden)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="common" data-name="Cold Bar" data-rarity="Common" style="--x:2;--y:1" aria-label="Cold Bar (common)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Golden Edge" data-rarity="Unusual" style="--x:3;--y:1" aria-label="Golden Edge (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Service Bell" data-rarity="Unusual" style="--x:4;--y:1" aria-label="Service Bell (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Two-Pair Ribbon" data-rarity="Unusual" style="--x:5;--y:1" aria-label="Two-Pair Ribbon (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="common" data-name="Fairground Fruit" data-rarity="Common" style="--x:6;--y:1" aria-label="Fairground Fruit (common)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="forbidden" data-name="Fasting Machine" data-rarity="Forbidden" style="--x:7;--y:1" aria-label="Fasting Machine (forbidden)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Dragging Pair" data-rarity="Unusual" style="--x:0;--y:2" aria-label="Dragging Pair (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Seven in Halves" data-rarity="Rare" style="--x:1;--y:2" aria-label="Seven in Halves (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="common" data-name="Last Spin" data-rarity="Common" style="--x:2;--y:2" aria-label="Last Spin (common)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Golden Pocket" data-rarity="Rare" style="--x:3;--y:2" aria-label="Golden Pocket (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Double Chance" data-rarity="Rare" style="--x:4;--y:2" aria-label="Double Chance (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="The Collector's Dozen" data-rarity="Unusual" style="--x:5;--y:2" aria-label="The Collector's Dozen (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Middle Dozen" data-rarity="Unusual" style="--x:6;--y:2" aria-label="Middle Dozen (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Number of the Day" data-rarity="Unusual" style="--x:7;--y:2" aria-label="Number of the Day (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Red Felt" data-rarity="Unusual" style="--x:0;--y:3" aria-label="Red Felt (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Three on One Square" data-rarity="Rare" style="--x:1;--y:3" aria-label="Three on One Square (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Cursed Neighbor" data-rarity="Rare" style="--x:2;--y:3" aria-label="Cursed Neighbor (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Light IOU" data-rarity="Unusual" style="--x:3;--y:3" aria-label="Light IOU (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="rare" data-name="Long Window" data-rarity="Rare" style="--x:4;--y:3" aria-label="Long Window (rare)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Four on the Table" data-rarity="Unusual" style="--x:5;--y:3" aria-label="Four on the Table (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Pocket Reroll" data-rarity="Unusual" style="--x:6;--y:3" aria-label="Pocket Reroll (unusual)"><i></i></button></li>
+								<li><button class="pin" type="button" data-r="unusual" data-name="Second Tongue" data-rarity="Unusual" style="--x:7;--y:3" aria-label="Second Tongue (unusual)"><i></i></button></li></ul>
+							<p class="pins-caption" aria-live="polite">Hover over a pin, or tap it, to see its name.</p>
+							<ul class="pins-legend">
+								<li style="--c:var(--mist)">Common</li>
+								<li style="--c:var(--gold)">Unusual</li>
+								<li style="--c:#4c8cff">Rare</li>
+								<li style="--c:var(--red-hi)">Forbidden</li>
+							</ul>
+						</li>
+
+						<li class="step" data-note="Drinks cost money, not bets.">
+							<span class="step__time">A DRINK FOR THE NERVES</span>
+							<div class="step__head">
+								<span class="reel" aria-hidden="true" data-pin="10"><span class="reel__strip" style="--stop:0"><i style="--x:2;--y:1"></i></span></span>
+								<h3>The bar</h3>
+							</div>
+							<p>With a few drinks in you, luck seems on your side, the floor moves and your body reacts late. The bartender knows when it’s enough. You never do.</p>
+							<button class="frame zoomable is-drunk" type="button" data-full="/assets/img/shots/barra.webp" data-caption="The bar: “Have a seat. The stool doesn’t charge interest.”">
+								<img src="/assets/img/shots/barra.webp" srcset="/assets/img/shots/barra-1x.webp 640w, /assets/img/shots/barra.webp 1280w" sizes="(max-width: 1000px) 100vw, 760px" width="1280" height="720" loading="lazy" decoding="async" alt="The bar seen from the stool: shelves full of bottles, the white-haired bartender and the drinks menu with beer, double whisky and water. The bartender says, in Spanish, “Have a seat. The stool doesn’t charge interest.”">
+							</button>
+							<div class="smoke">
+								<span class="smoke__puff" aria-hidden="true"></span>
+								<p>In the smoking room, a cigarette speeds you up. It costs time, not bets. Your lungs get billed by someone else.</p>
+							</div>
+						</li>
+
+						<li class="step collector" data-note="The day is over. The collector is here.">
+							<span class="step__time">0:00 · END OF THE DAY</span>
+							<div class="step__head">
+								<span class="reel" aria-hidden="true" data-pin="21"><span class="reel__strip" style="--stop:0"><i style="--x:5;--y:2"></i></span></span>
+								<h3>The collector arrives</h3>
+							</div>
+							<p>When the day closes, he comes for his cut. You can pay whenever you want; on the last day of an installment, you pay it in full or that’s as far as you go.</p>
+							<div class="frame">
+								<img src="/assets/img/shots/cobrador.webp" srcset="/assets/img/shots/cobrador-1x.webp 640w, /assets/img/shots/cobrador.webp 1280w" sizes="(max-width: 1000px) 100vw, 760px" width="1280" height="720" loading="lazy" decoding="async" alt="A dark doorway in a red wall. In the shadow of the frame you can make out the collector’s silhouette, not quite stepping in yet.">
+							</div>
+						</li>
+					</ol>
+				</div>
+
+				<div class="after-day panel reveal">
+					<p>Survived? Tomorrow you owe more. And if you do too well, the organization <strong>moves you to another casino</strong>, with a new floor plan to learn.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============================================================ THE CASINO -->
+		<section class="section section--carpet casino" id="casino" aria-labelledby="casino-title">
+			<div class="wrap">
+				<header class="section__head">
+					<p class="kicker"><span class="reel" aria-hidden="true" data-pin="19"><span class="reel__strip" style="--stop:0"><i style="--x:3;--y:2"></i></span></span> The casino</p>
+					<h2 id="casino-title" class="reveal">Learn it: it won’t change until they move you.</h2>
+					<p class="lede reveal" style="--d:1">Each casino is put together piece by piece from a seed and stays the same until you’re moved. Knowing where every room is buys you time against the clock. This is the one from seed 777, straight from the game.</p>
+				</header>
+
+				<div class="map">
+					<div class="map__view" tabindex="0" aria-label="Casino floor plan. Drag to explore or use the arrow keys; plus and minus to zoom.">
+						<img class="map__img" src="/assets/img/map/casino.webp" width="2832" height="2960" loading="lazy" decoding="async" alt="Full floor plan of the seed 777 casino: the parking lot with the lion at the bottom, the main hall above it and, joined by corridors, the slots, roulette, blackjack and horse rooms, the bar, the Brujo, the restroom, the cashier and the smoking room.">
+						<div class="map__marks" aria-hidden="true"></div>
+						<div class="map__tools">
+							<button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+							<button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+						</div>
+						<p class="map__hint" aria-hidden="true">Drag to explore</p>
+					</div>
+
+					<div class="map__side">
+						<ul class="rooms">
+							<li><button type="button" aria-pressed="true" data-room="parqueo" data-x="112" data-y="1856" data-w="640" data-h="1088" data-shot="/assets/img/shots/sala-parqueo.webp" data-desc="The lion at the entrance. Its mouth is the door, and the clock doesn’t start until you walk through it." data-alt="The parking lot by day, from above: cars parked in two rows and the path to the entrance.">Parking lot</button></li>
+							<li><button type="button" aria-pressed="false" data-room="salon" data-x="16" data-y="1392" data-w="848" data-h="464" data-shot="/assets/img/shots/dia-salon.webp" data-desc="A bit of everything: slots, roulette and blackjack. Outside their own room, every game pays less." data-alt="The main hall: roulette and blackjack tables, slot machines and people walking.">Main hall</button></li>
+							<li><button type="button" aria-pressed="false" data-room="tragamonedas" data-x="1280" data-y="752" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-tragamonedas.webp" data-desc="Rows of machines. In their own room, every machine pays 10% more." data-alt="The slots room: two rows of machines with stools on red carpet.">Slots</button></li>
+							<li><button type="button" aria-pressed="false" data-room="ruleta" data-x="720" data-y="64" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-ruleta.webp" data-desc="Four tables, 1 to 36 and no zero." data-alt="The roulette room: four green-felt tables on blue carpet, with plants in the corners.">Roulette</button></li>
+							<li><button type="button" aria-pressed="false" data-room="blackjack" data-x="1840" data-y="752" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-blackjack.webp" data-desc="Four green-felt tables and a house that stands on 17." data-alt="The blackjack room: four semicircular green-felt tables on blue carpet.">Blackjack</button></li>
+							<li><button type="button" aria-pressed="false" data-room="caballos" data-x="160" data-y="704" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-caballos.webp" data-desc="Through the big window you can see the racetrack. The betting window takes your bet." data-alt="The horse room: tables and chairs facing a long window that looks out on the racetrack.">Horses</button></li>
+							<li><button type="button" aria-pressed="false" data-room="bar" data-x="160" data-y="64" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-bar.webp" data-desc="Two bartenders, shelves of bottles and tables to catch your breath. You pay with money, not bets." data-alt="The bar: two curved counters with bartenders, bottle shelves in the back and tables.">Bar</button></li>
+							<li><button type="button" aria-pressed="false" data-room="brujo" data-x="1280" data-y="1440" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-brujo.webp" data-desc="A table, candles and someone who already knows how your day ends." data-alt="The Brujo’s room: a large, almost empty room with the fortune-teller’s table at the back.">Brujo</button></li>
+							<li><button type="button" aria-pressed="false" data-room="bano" data-x="1280" data-y="64" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-bano.webp" data-desc="One visit a day. If your aim is bad, nobody cleans up." data-alt="The restroom: stalls, sinks and urinals on both sides of a tiled corridor.">Restroom</button></li>
+							<li><button type="button" aria-pressed="false" data-room="caja" data-x="2256" data-y="1440" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-caja.webp" data-desc="The window sells food, and every dish speeds you up." data-alt="The cashier: barred windows at the back with a queue marked by ropes.">Cashier</button></li>
+							<li><button type="button" aria-pressed="false" data-room="fumadores" data-x="720" data-y="384" data-w="560" data-h="320" data-shot="/assets/img/shots/sala-fumadores.webp" data-desc="Armchairs and ashtrays. A whole cigarette speeds you up." data-alt="The smoking room: orange armchairs and low tables on blue carpet, with windows at the back.">Smoking room</button></li>
+						</ul>
+
+						<div class="room-card panel">
+							<h3>Parking lot</h3>
+							<p>The lion at the entrance. Its mouth is the door, and the clock doesn’t start until you walk through it.</p>
+							<button class="zoomable" type="button" data-full="/assets/img/shots/sala-parqueo.webp" data-caption="The parking lot by day, from above.">
+								<img src="/assets/img/shots/sala-parqueo-1x.webp" width="640" height="360" loading="lazy" decoding="async" alt="The parking lot by day, from above: cars parked in two rows and the path to the entrance.">
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="strip" aria-hidden="true"></div>
+
+		<!-- ============================================================ NOTICE -->
+		<section class="notice" aria-labelledby="notice-title">
+			<div class="wrap">
+				<div class="plaque panel">
+					<span class="plaque__age" aria-hidden="true">18+</span>
+					<div>
+						<h2 id="notice-title">Contains simulated gambling, alcohol and tobacco. No real money. 18+.</h2>
+						<p>The game’s colones (₡) are fictional: they can’t be bought, cashed out or exchanged for anything. There are no in-game purchases. If gambling with real money is costing you, seek help.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============================================================ FINAL CALL -->
+		<section class="final" aria-labelledby="final-title">
+			<div class="coins" aria-hidden="true"></div>
+			<div class="wrap">
+				<h2 id="final-title" class="reveal">One more bet. Just one.</h2>
+				<p class="reveal" style="--d:1">The debt won’t pay itself, and the collector won’t wait.</p>
+				<a class="btn btn--play reveal" style="--d:2" href="#ITCH_URL">
+					Play on itch.io
+					<span class="lever" aria-hidden="true"><span class="lever__base"></span><span class="lever__arm"></span></span>
+				</a>
+				<p class="platforms">Windows · Android · Browser · Game text in Spanish</p>
+				<p class="platforms">The game asks before sending run statistics. <a href="/en/privacy">Privacy policy</a>.</p>
+			</div>
+		</section>
+	</main>
+
+	<footer class="footer">
+		<div class="wrap">
+			<div class="footer__grid">
+				<div>
+					<a class="brand" href="/en"><img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated"><span>JUST ONE MORE BET</span></a>
+					<p style="margin-top:16px">A game by Walter Daniel Mejía Palacios and Samuel Fernando Calderón Reyes.</p>
+					<p>Made with Godot Engine.</p>
+				</div>
+				<div>
+					<h2>Links</h2>
+					<ul>
+						<li><a href="#ITCH_URL">Play on itch.io</a></li>
+						<li><a href="/en/credits">Credits and licenses</a></li>
+						<li><a href="/en/privacy">Privacy policy</a></li>
+						<li><a href="/" hreflang="es" lang="es">Versión en español</a></li>
+					</ul>
+				</div>
+				<div>
+					<h2>Contact</h2>
+					<ul>
+						<li><a href="mailto:waltermejia61@hotmail.com">waltermejia61@hotmail.com</a></li>
+						<li><a href="mailto:sfernandocalderon@gmail.com">sfernandocalderon@gmail.com</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer__content">
+				<span>© 2026 Walter Daniel Mejía Palacios and Samuel Fernando Calderón Reyes</span>
+				<span>18+ · Simulated gambling, alcohol and tobacco · No real money</span>
+			</div>
+		</div>
+	</footer>
+
+	<dialog class="viewer" aria-labelledby="viewer-caption">
+		<button class="btn btn--small viewer__close" type="button">Close</button>
+		<img src="data:," alt="">
+		<p id="viewer-caption"></p>
+	</dialog>
+</body>
+</html>
