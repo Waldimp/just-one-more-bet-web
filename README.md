@@ -49,9 +49,10 @@ python -m http.server  # /privacidad/ y /en/ funcionan con la barra final
 
 ## Marcadores pendientes
 
+La página de itch.io ya está puesta (2026-10-06): https://mohhamedsamu.itch.io/just-one-more-bet
+
 | Marcador | Dónde | Qué poner |
 |---|---|---|
-| `#ITCH_URL` | todas las páginas (botones "Jugar") | la URL de la página de itch.io. Buscar y reemplazar en los `.html` |
 | `https://just-one-more-bet-web.vercel.app` | `canonical`, `hreflang`, Open Graph, `sitemap.xml`, `robots.txt` | el dominio final, si cambia. Buscar y reemplazar |
 
 Para comprobar que no queda ningún enlace interno roto (y listar los marcadores):
