@@ -214,10 +214,10 @@ def build_og(game: Path) -> None:
 
     hero = IMG / "hero"
     comp = Image.new("RGBA", (960, 1088), (*WINE_0, 255))
-    comp.alpha_composite(Image.open(hero / "hero-back.png").convert("RGBA"))
+    comp.alpha_composite(Image.open(hero / "hero-back.webp").convert("RGBA"))
     for layer in ("hero-bulbs-band-0", "hero-bulbs-band-1", "hero-sign", "hero-bulbs-sign-0",
                   "hero-bulbs-sign-1", "hero-front"):
-        comp.alpha_composite(Image.open(hero / f"{layer}.png").convert("RGBA"), (160, 0))
+        comp.alpha_composite(Image.open(hero / f"{layer}.webp").convert("RGBA"), (160, 0))
     # 600x315 de arte -> 1200x630. El arte empieza en x=160 de la composicion.
     crop = comp.crop((180, 218, 780, 533))
     base = x2(crop.convert("RGB")).convert("RGBA")

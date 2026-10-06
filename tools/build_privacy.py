@@ -31,16 +31,6 @@ PAGES = [
      "PRIVACY", "START", "END", "On this page"),
 ]
 
-# Erratas del texto entregado (minuscula tras punto). Se corrigen al convertir; si el .md
-# ya viene bien, no hacen nada.
-FIXES = [
-    ("más. también se borra", "más. También se borra"),
-    ("instalación**.\nlo ves", "instalación**.\nLo ves"),
-    ("sent.\n  the ID is also", "sent.\n  The ID is also"),
-    ("**install ID**.\nyou can see", "**install ID**.\nYou can see"),
-]
-
-
 def slug(text: str) -> str:
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
     text = re.sub(r"[^a-zA-Z0-9]+", "-", text).strip("-").lower()
@@ -79,8 +69,6 @@ def table(rows: list[str]) -> str:
 
 
 def convert(md: str) -> tuple[str, str, str, list[tuple[str, str]]]:
-    for a, b in FIXES:
-        md = md.replace(a, b)
     lines = md.splitlines()
     title, version, blocks, toc = "", "", [], []
     i = 0

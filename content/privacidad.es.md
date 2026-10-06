@@ -121,7 +121,7 @@ falla, sigues jugando y se reintenta más tarde.
 
 - **No aceptar:** no se envía nada y no se crea ningún ID.
 - **Apagar el envío** en Configuración: se vacía la cola de envíos pendientes y no se envía nada
-  más. también se borra el ID de tu dispositivo; si vuelves a activarlo, se
+  más. También se borra el ID de tu dispositivo; si vuelves a activarlo, se
   crea uno nuevo.
 - **Desinstalar el juego** o, en la web, borrar los datos del sitio: se borra todo lo que el juego
   guardó en tu dispositivo.
@@ -133,7 +133,7 @@ Unido), tienes derecho a **acceder** a tus datos, **corregirlos**, **borrarlos**
 uso, **limitarlo**, **llevártelos** y **retirar tu consentimiento**.
 
 Como no sabemos quién eres, solo podemos encontrar tus datos si nos das el **ID de instalación**.
-lo ves en Configuración, junto al interruptor, con un botón para copiarlo.
+Lo ves en Configuración, junto al interruptor, con un botón para copiarlo.
 Escríbenos a cualquiera de los dos correos con ese ID y lo que quieres que hagamos. Te
 responderemos en un plazo máximo de **un mes**. Si ya borraste el ID de tu dispositivo, no
 podemos saber qué filas eran tuyas; en ese caso esos datos solo se borran al cumplirse el plazo

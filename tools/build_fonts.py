@@ -1,8 +1,14 @@
 """Fuentes de la web, desde `assets/fonts/Geist_Pixel.zip` del juego.
 
-- `geist-pixel.woff2`: Geist Pixel variable (eje ELSH) recortada a latin basico y latin-1 mas
-  la puntuacion que usa el sitio. ~25 KB. El eje se conserva: el titulo usa ELSH=20 (circulos,
-  como bombillas) y el resto el valor por defecto.
+- `geist-pixel.woff2`: Geist Pixel recortada a latin basico y latin-1 mas la puntuacion que usa
+  el sitio, como instancia ESTATICA del eje ELSH=0 (pixel cuadrado). ~15 KB.
+- `geist-pixel-bulbs.woff2`: la misma, instancia ELSH=20 (cada pixel es un circulo, como una
+  bombilla) para los titulos de marquesina. ~15 KB.
+  Por que estaticas y con los pixeles fundidos: cada glifo de Geist Pixel trae un contorno por
+  pixel (cientos por letra) y el navegador los recorre al maquetar. Medido en Chrome con la CPU
+  a 1/4: 12 s de layout con la fuente tal cual, 0,5 s sin ella. En la de pixel cuadrado las
+  celdas se funden en un contorno por trazo (removeOverlaps, con skia-pathops); la de circulos
+  no se puede fundir, pero solo la usan los titulos.
 - `jomb-colon.woff2`: un solo glifo, el signo de colon (U+20A1), que Geist Pixel no trae. Se
   dibuja en su misma rejilla de 38 unidades: las celdas de su 'C' mas dos trazos inclinados.
   Es un derivado de Geist Pixel bajo OFL 1.1, con otro nombre de familia.
@@ -20,6 +26,7 @@ from pathlib import Path
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib import TTFont
+from fontTools.ttLib.removeOverlaps import removeOverlaps
 from fontTools.varLib import instancer
 
 OUT = Path(__file__).resolve().parent.parent / "assets" / "fonts"
@@ -73,6 +80,7 @@ def build_colon(static: TTFont, path: Path) -> None:
     })
     fb.setupOS2(sTypoAscender=1005, sTypoDescender=-295, usWinAscent=1005, usWinDescent=295)
     fb.setupPost()
+    removeOverlaps(fb.font)
     fb.font.flavor = "woff2"
     fb.save(str(path))
 
@@ -85,12 +93,22 @@ def main() -> None:
         src = Path(tmp) / VARIABLE
         src.write_bytes(zf.read(VARIABLE))
         (OUT / "OFL.txt").write_bytes(zf.read("OFL.txt"))
-        subprocess.run([
-            sys.executable, "-m", "fontTools.subset", str(src), f"--unicodes={UNICODES}",
-            "--layout-features=kern,liga,calt", "--flavor=woff2",
-            f"--output-file={OUT / 'geist-pixel.woff2'}",
-        ], check=True)
-        static = instancer.instantiateVariableFont(TTFont(src), {"ELSH": 0})
+        static = None
+        for name, elsh in (("geist-pixel", 0), ("geist-pixel-bulbs", 20)):
+            inst = instancer.instantiateVariableFont(TTFont(src), {"ELSH": elsh})
+            if elsh == 0:
+                # Las celdas se tocan: se funden en un solo contorno por trazo. De ~400 000
+                # puntos a ~9 000, y la letra se ve igual. Es lo que hace barata la maquetacion.
+                static = TTFont(src)
+                static = instancer.instantiateVariableFont(static, {"ELSH": 0})
+                removeOverlaps(inst)
+            tmp_ttf = Path(tmp) / f"{name}.ttf"
+            inst.save(str(tmp_ttf))
+            subprocess.run([
+                sys.executable, "-m", "fontTools.subset", str(tmp_ttf), f"--unicodes={UNICODES}",
+                "--layout-features=kern,liga,calt", "--flavor=woff2",
+                f"--output-file={OUT / (name + '.woff2')}",
+            ], check=True)
         build_colon(static, OUT / "jomb-colon.woff2")
     for f in sorted(OUT.iterdir()):
         print(f"  {f.name}  {f.stat().st_size} B")

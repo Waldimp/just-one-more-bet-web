@@ -116,7 +116,7 @@ sending fails, you keep playing and it retries later.
 
 - **Don't agree:** nothing is sent and no ID is created.
 - **Turn sending off** in Settings: the pending queue is emptied and nothing else is sent.
-  the ID is also deleted from your device; if you turn it back on, a new one is
+  The ID is also deleted from your device; if you turn it back on, a new one is
   created.
 - **Uninstall the game** or, on the web, clear the site's data: everything the game stored on your
   device is deleted.
@@ -129,7 +129,7 @@ United Kingdom), you have the right to **access**, **correct** and **delete** yo
 consent**.
 
 Since we don't know who you are, we can only find your data if you give us your **install ID**.
-you can see it in Settings, next to the switch, with a button to copy it. Email
+You can see it in Settings, next to the switch, with a button to copy it. Email
 either of us with that ID and what you want us to do. We'll reply within **one month**. If you
 already deleted the ID from your device, we can't tell which rows were yours; in that case they
 are only deleted when the retention period ends.

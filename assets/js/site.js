@@ -49,7 +49,7 @@
 			for (let i = 0; i < 3; i++) {
 				const im = new Image();
 				im.decoding = "async";
-				im.src = `${base}hero-bulbs-${g}-${i}.png`;
+				im.src = `${base}hero-bulbs-${g}-${i}.webp`;
 				layers.bulbs[g].push(im);
 			}
 		}
@@ -75,8 +75,11 @@
 			canvas.width = Math.round(vw * dpr);
 			canvas.height = Math.round(vh * dpr);
 			// Escala entera: el pixel del juego nunca se reparte entre dos tamanos en reposo.
+			// Y que debajo de la cornisa quepan al menos ~200 filas de arte: la cara y la boca del
+			// leon tienen que verse antes de hacer scroll. En pantallas bajas se acepta 2 igual.
 			scale = clamp(Math.round(vw / 700), 1, 4);
-			while (scale > 1 && vh / scale < 330) scale--;
+			scale = Math.min(scale, Math.max(2, Math.floor((0.48 * vh) / 200)));
+			while (scale > 1 && vh / scale < 300) scale--;
 			const visW = vw / scale;
 			// En pantallas estrechas el encuadre se corre a la izquierda para que quepa el cartel.
 			cx0 = visW < 640 ? ART.mouthX - (640 - visW) * 0.22 : ART.mouthX;

@@ -3,11 +3,11 @@
 Entrada: las capas que saca `tools/godot/render_parking_layers.gd` del juego (parqueo deco a
 resolucion nativa, fondo transparente). Salida en `assets/img/hero/`:
 
-  hero-back.png    suelo + fachada + leon, graduado de noche
-  hero-sign.png    cartel de Las Vegas y totem, de noche, bombillas apagadas
-  hero-front.png   palmeras, jardineras, farolas y bolardos (la capa mas cercana)
-  hero-bulbs-0..2  bombillas encendidas por fase, para la persecucion de la marquesina
-  hero-glow.png    halos de luz de las farolas y del leon (se dibuja con 'lighter')
+  hero-back.webp          suelo + fachada + leon, graduado de noche, 960 de ancho (espejo)
+  hero-sign.webp          cartel de Las Vegas y totem, de noche, bombillas apagadas
+  hero-front.webp         palmeras, jardineras, farolas y bolardos (la capa mas cercana)
+  hero-bulbs-sign-0..2    bombillas del cartel encendidas, una capa por fase de la persecucion
+  hero-bulbs-band-0..2    lo mismo para la marquesina de la fachada
 
 Todo color de salida se ajusta a `tools/art/master_palette.gpl` del juego: la noche no mete
 colores nuevos, solo elige otros de la misma paleta.
@@ -119,7 +119,8 @@ def grade(img: np.ndarray, light: np.ndarray, snapper: Snapper) -> np.ndarray:
 def save(arr: np.ndarray, name: str) -> None:
     a = np.clip(arr, 0, 255).astype(np.uint8)
     a[a[..., 3] == 0] = 0
-    Image.fromarray(a, "RGBA").save(OUT / name, optimize=True)
+    # WebP sin perdida: la mitad que el PNG (la capa de fondo, de 122 a 47 KB).
+    Image.fromarray(a, "RGBA").save(OUT / name, lossless=True, quality=100, method=6, exact=True)
     print(f"  {name}  {a.shape[1]}x{a.shape[0]}")
 
 
@@ -241,12 +242,12 @@ def main() -> None:
     wide = np.concatenate(
         [night_back[:, MARGIN - 1::-1], night_back, night_back[:, :-MARGIN - 1:-1]], axis=1
     )
-    save(wide, "hero-back.png")
-    save(night_sign, "hero-sign.png")
-    save(night_front, "hero-front.png")
+    save(wide, "hero-back.webp")
+    save(night_sign, "hero-sign.webp")
+    save(night_front, "hero-front.webp")
     for g in phases:
         for i, p in enumerate(phases[g]):
-            save(p, f"hero-bulbs-{g}-{i}.png")
+            save(p, f"hero-bulbs-{g}-{i}.webp")
 
     # Vista previa compuesta (no se publica).
     comp = over(over(night_back, night_sign), night_front)
