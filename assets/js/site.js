@@ -36,7 +36,9 @@
 
 		// Coordenadas de arte (pixeles del juego). La capa de fondo es 160 px mas ancha por
 		// cada lado; el resto empieza en x = 0.
-		const ART = { w: 640, h: 1088, margin: 160, mouthX: 320, mouthY: 487, facadeTop: 290 };
+		// La boca es el hueco negro de la puerta, entre los colmillos y la alfombra roja: en el
+		// leon de pie de Samuel va de x 301 a 339 y de y 478 a 512.
+		const ART = { w: 640, h: 1088, margin: 160, mouthX: 320, mouthY: 495, facadeTop: 290 };
 		const base = root.dataset.art || "/assets/img/hero/";
 		const domImg = (cls) => root.querySelector(cls);
 		const layers = {

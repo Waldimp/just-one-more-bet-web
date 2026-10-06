@@ -2,9 +2,14 @@
 ## para montar el hero de la web con parallax.
 ##
 ##   tools/godot.sh --path . --script <ruta>/render_parking_layers.gd -- <carpeta_salida>
+##
+## La escena es la que usa el juego (la del `RoomDefinition` del parqueo), no una fija: asi el
+## hero sigue a la fachada que haya. En la fachada pintada a mano por Samuel el cartel de Las
+## Vegas viene dentro del PNG de la fachada y ya no hay nodos VegasSign ni Pylon: la pasada
+## "sign" sale vacia y `build_hero.py` recorta el cartel de la capa de la fachada.
 extends SceneTree
 
-const ROOM := "res://scenes/world/rooms/parking_lot_room_deco.tscn"
+const ROOM_DEF := "res://resources/rooms/parking_lot.tres"
 const TILE := 16
 
 const SIGN := ["VegasSign", "Pylon"]
@@ -24,7 +29,8 @@ func _run() -> void:
 	var args := OS.get_cmdline_user_args()
 	_out = args[0] if not args.is_empty() else ProjectSettings.globalize_path("user://layers")
 	DirAccess.make_dir_recursive_absolute(_out)
-	var scene := load(ROOM) as PackedScene
+	var scene := (load(ROOM_DEF) as Resource).get(&"scene") as PackedScene
+	print("escena ", scene.resource_path)
 	var probe := scene.instantiate()
 	var rect: Rect2i = probe.call(&"compute_used_tile_rect")
 	probe.free()

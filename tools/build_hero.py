@@ -12,6 +12,12 @@ resolucion nativa, fondo transparente). Salida en `assets/img/hero/`:
 Todo color de salida se ajusta a `tools/art/master_palette.gpl` del juego: la noche no mete
 colores nuevos, solo elige otros de la misma paleta.
 
+La fachada pintada a mano por Samuel trae el cartel de Las Vegas dentro del mismo PNG (ya no es
+un sprite suelto). Si la capa del cartel llega vacia, se busca el cartel del juego
+(`parking_vegas_sign_deco.png`) pegado en la fachada, se pasa a su capa para que siga teniendo
+parallax, y el hueco que deja se rellena: fuera del portal con la fachada deco, que es el mismo
+edificio; dentro, con el reflejo del portal, que es simetrico.
+
 Uso:
   python tools/build_hero.py <carpeta_capas> <ruta_juego>
 """
@@ -37,6 +43,15 @@ AMBIENT = np.array([0.20, 0.23, 0.40])
 WARM = np.array([1.00, 0.90, 0.74])
 
 BAYER4 = np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]) / 16.0
+
+# El cartel de Las Vegas y la fachada deco sin cartel pintado, en el repo del juego.
+SIGN_SPRITE = "assets/sprites/props/parking_vegas_sign_deco.png"
+FACADE_DECO = "assets/sprites/props/casino_entrance_facade_deco.png"
+# Esquina del cartel cuando era un sprite suelto de la escena deco. Las coordenadas de luz del
+# cartel (postes, centro de la persecucion) se midieron ahi y se corren con el cartel.
+SIGN_REF = (0, 262)
+# Columnas del portal de la fachada: dentro esta el leon, fuera las bahias de ventanas.
+PORTAL_X = (184, 456)
 
 
 def load_palette(game: Path) -> np.ndarray:
@@ -116,6 +131,61 @@ def grade(img: np.ndarray, light: np.ndarray, snapper: Snapper) -> np.ndarray:
     return out
 
 
+def find_sprite(layer: np.ndarray, sprite: np.ndarray) -> tuple[int, int] | None:
+    """Esquina donde `sprite` esta pegado tal cual (pixeles opacos identicos) en `layer`."""
+    opaque = sprite[..., 3] > 0
+    ys, xs = np.nonzero(opaque)
+    h, w = sprite.shape[:2]
+    rows, cols = layer.shape[0] - h + 1, layer.shape[1] - w + 1
+    if rows <= 0 or cols <= 0:
+        return None
+    # Criba con una muestra de pixeles; luego se comprueba el sprite entero.
+    hits = np.ones((rows, cols), dtype=bool)
+    for i in np.linspace(0, len(ys) - 1, 96).astype(int):
+        ty, tx = ys[i], xs[i]
+        hits &= np.all(layer[ty:ty + rows, tx:tx + cols] == sprite[ty, tx], axis=-1)
+        if not hits.any():
+            return None
+    for y, x in zip(*np.nonzero(hits)):
+        if np.all(layer[y:y + h, x:x + w][opaque] == sprite[opaque]):
+            return int(x), int(y)
+    return None
+
+
+def split_painted_sign(facade: np.ndarray, game: Path) -> tuple[np.ndarray, np.ndarray, tuple]:
+    """Saca el cartel pintado en la fachada a su propia capa y rellena el hueco.
+
+    Devuelve (fachada sin cartel, cartel, desplazamiento del cartel respecto de `SIGN_REF`).
+    """
+    sprite = np.asarray(Image.open(game / SIGN_SPRITE).convert("RGBA")).astype(np.float64)
+    at = find_sprite(facade, sprite)
+    if at is None:
+        sys.exit("build_hero: la capa del cartel esta vacia y el cartel no aparece en la fachada")
+    x0, y0 = at
+    h, w = sprite.shape[:2]
+    mask = np.zeros(facade.shape[:2], dtype=bool)
+    mask[y0:y0 + h, x0:x0 + w] = sprite[..., 3] > 0
+    sign = np.zeros_like(facade)
+    sign[mask] = facade[mask]
+
+    deco = np.zeros_like(facade)
+    d = np.asarray(Image.open(game / FACADE_DECO).convert("RGBA")).astype(np.float64)
+    d = d[:facade.shape[0], :facade.shape[1]]
+    deco[:d.shape[0], :d.shape[1]] = d
+    # Fuera del portal la deco tiene que ser la misma fachada; si no, el relleno inventaria.
+    wing = ~mask & (facade[..., 3] > 0) & (deco[..., 3] > 0)
+    wing[:, PORTAL_X[0]:PORTAL_X[1]] = False
+    same = np.all(facade[wing] == deco[wing], axis=-1).mean()
+    if same < 0.95:
+        sys.exit(f"build_hero: la fachada deco ya no coincide con la del juego ({same:.0%})")
+    fill = np.where((np.arange(facade.shape[1]) < PORTAL_X[0])[None, :, None],
+                    deco, facade[:, ::-1])
+    back = facade.copy()
+    back[mask] = fill[mask]
+    print(f"  cartel pintado en ({x0}, {y0}): {mask.sum()} px a su capa")
+    return back, sign, (x0 - SIGN_REF[0], y0 - SIGN_REF[1])
+
+
 def save(arr: np.ndarray, name: str) -> None:
     a = np.clip(arr, 0, 255).astype(np.uint8)
     a[a[..., 3] == 0] = 0
@@ -136,6 +206,9 @@ def main() -> None:
     sign = rgba(layers / "parking_sign.png")
     front = rgba(layers / "parking_front.png")
     h, w = ground.shape[:2]
+    sx, sy = 0, 0
+    if sign[..., 3].max() == 0:
+        facade, sign, (sx, sy) = split_painted_sign(facade, game)
 
     back = over(over(ground, lot), facade)
 
@@ -145,6 +218,11 @@ def main() -> None:
     # portal (x 184-456): fuera, un ovalo de luz sobre las ventanas se leia como un error.
     portal = np.zeros((h, w))
     portal[286:548, 184:456] = 1.0
+    # El leon de pie baja las patas a la plaza, por debajo del estrado: los mismos focos las
+    # alumbran, solo a ellas (pixeles de la fachada), no a las baldosas de alrededor.
+    paws = np.zeros((h, w), dtype=bool)
+    paws[548:600, PORTAL_X[0]:PORTAL_X[1]] = facade[548:600, PORTAL_X[0]:PORTAL_X[1], 3] > 0
+    portal[paws] = 1.0
     light = np.maximum(light, portal * np.clip(ellipse(h, w, 320, 500, 190, 260) * 1.8, 0, 1))
     # Derrame suave sobre la piedra de alrededor.
     light = np.maximum(light, ellipse(h, w, 320, 470, 230, 200) * 0.55)
@@ -166,6 +244,8 @@ def main() -> None:
     # La claraboya del tejado (y 150-230) queda apagada: encendida competia con el titulo, que
     # en la web cae justo encima.
     warm_panes[150:230, :] = False
+    # En el portal no hay ventanas: esos naranjas son del leon, que ya alumbran los focos.
+    warm_panes[286:600, PORTAL_X[0]:PORTAL_X[1]] = False
     light_back = light.copy()
     light_back[warm_panes] = 1.0
     # El interior de la boca del leon: negro calido, no azul.
@@ -177,8 +257,8 @@ def main() -> None:
     # --- Cartel ------------------------------------------------------------------------
     sign_light = np.where(sign[..., 3] > 0, 0.9, 0.0)
     # Los postes y el totem no se alumbran solos.
-    sign_light[500:, :] = np.minimum(sign_light[500:, :], 0.45)
-    sign_light[:, 540:] = np.minimum(sign_light[:, 540:], 0.55)
+    sign_light[500 + sy:, :] = np.minimum(sign_light[500 + sy:, :], 0.45)
+    sign_light[:, 540 + sx:] = np.minimum(sign_light[:, 540 + sx:], 0.55)
     night_sign = grade(sign, sign_light, snapper)
 
     # Bombillas: los puntos amarillo claro del borde del cartel.
@@ -194,9 +274,8 @@ def main() -> None:
     sub = back[band_rows]
     bright = (sub[..., :3].sum(-1) > 600) & (sub[..., 3] > 0)
     band_bulbs[band_rows] = bright
-    labels, n = ndimage.label(bulbs | band_bulbs)
-    print(f"  bombillas: {n}")
-    centers = ndimage.center_of_mass(np.ones_like(labels), labels, range(1, n + 1))
+    # La marquesina se corta en el portal: lo claro de ahi es el leon, no bombillas.
+    band_bulbs[:, PORTAL_X[0]:PORTAL_X[1]] = False
 
     # Las bombillas apagadas: ambar oscuro en la capa del cartel y de la fachada.
     off = np.array([132, 51, 9], dtype=np.float64)
@@ -208,17 +287,21 @@ def main() -> None:
     # y sus bombillas tienen que viajar con el.
     on_core = np.array([255, 242, 143])
     on_ring = np.array([255, 162, 20])
+    # Cada grupo se etiqueta por separado: el cartel tapa un tramo de la marquesina y sus
+    # bombillas no se pueden fundir con las de la fachada que quedan detras.
     groups = {"sign": [], "band": []}
-    for i, (cy, cx) in enumerate(centers, start=1):
-        if bulbs[int(round(cy)), int(round(cx))] or (labels == i)[bulbs].any():
-            groups["sign"].append((np.arctan2(cy - 410, cx - 117), i))
-        else:
-            groups["band"].append((cx, i))
+    labeled = {}
+    for g, found in (("sign", bulbs), ("band", band_bulbs)):
+        labeled[g], n = ndimage.label(found)
+        for i, (cy, cx) in enumerate(
+                ndimage.center_of_mass(found, labeled[g], range(1, n + 1)), start=1):
+            key = np.arctan2(cy - (410 + sy), cx - (117 + sx)) if g == "sign" else cx
+            groups[g].append((key, i))
     phases = {g: [np.zeros((h, w, 4)) for _ in range(3)] for g in groups}
     for g, items in groups.items():
         items.sort()
         for rank, (_, label) in enumerate(items):
-            mask = labels == label
+            mask = labeled[g] == label
             ring = ndimage.binary_dilation(mask, iterations=1) & ~mask
             p = phases[g][rank % 3]
             p[ring, :3] = on_ring
