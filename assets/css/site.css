@@ -869,6 +869,13 @@ p {
 	margin: 0;
 }
 
+/* El marco y la sombra son box-shadow: no ocupan sitio en la maquetacion. Sobresalen 4 px por
+ * los lados y 16 px por abajo, asi que lo que vaya pegado a un .frame necesita al menos ese aire
+ * (--frame-clear). Sin el, el texto de debajo quedaba montado sobre el marco. */
+:root {
+	--frame-clear: 22px;
+}
+
 .frame {
 	position: relative;
 	overflow: hidden;
@@ -886,7 +893,7 @@ p {
 	display: flex;
 	gap: 12px;
 	align-items: baseline;
-	margin-top: 14px;
+	margin-top: var(--frame-clear);
 	color: var(--cream);
 	font-size: 19px;
 	line-height: 1.4;
@@ -1443,6 +1450,7 @@ p {
 
 .step .frame {
 	margin-top: 22px;
+	margin-bottom: calc(var(--frame-clear) + 8px);
 }
 
 .tables {
@@ -1455,7 +1463,7 @@ p {
 }
 
 .table-card figcaption {
-	margin-top: 10px;
+	margin-top: var(--frame-clear);
 	font-size: 16px;
 	color: var(--mist);
 	line-height: 1.45;
