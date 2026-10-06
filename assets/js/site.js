@@ -257,7 +257,7 @@
 
 	function reveals() {
 		const targets = document.querySelectorAll(
-			".reveal, .kicker, .contract, .ladder, .screen, .smoke, .is-drunk, .collector, .strip"
+			".reveal, .kicker, .step__head, .contract, .ladder, .screen, .smoke, .is-drunk, .collector, .strip"
 		);
 		if (!("IntersectionObserver" in window)) {
 			targets.forEach((el) => el.classList.add("is-in"));

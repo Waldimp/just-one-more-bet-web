@@ -21,7 +21,7 @@ cookies, analíticas, trackers ni fuentes remotas, así que no necesita banner d
 assets/css/site.css     todos los estilos
 assets/js/boot.js       marca que hay JS antes de pintar (evita parpadeos)
 assets/js/site.js       hero en canvas, revelados, HUD del día, plano, visor, tráiler, monedas
-assets/fonts/           Geist Pixel recortada (24 KB), el glifo ₡ y la licencia OFL
+assets/fonts/           Geist Pixel recortada (5 KB + 15 KB la de bombillas), el glifo ₡ y la OFL
 assets/img/hero/        el parqueo de noche por capas (fondo, cartel, primer plano, bombillas)
 assets/img/shots/       capturas reales del juego, x2 vecino más cercano, WebP sin pérdida
 assets/img/map/         el plano entero del casino de la semilla 777
@@ -34,7 +34,7 @@ tools/                  scripts que generan los assets (no se despliegan: .verce
 vercel.json             cleanUrls, cabeceras de seguridad y caché
 ```
 
-Peso total sin video: **~1,7 MB**. La portada carga primero el hero (~180 KB) y la fuente;
+Peso total sin video: **~1,5 MB**. La portada carga primero el hero (~60 KB) y las fuentes (~20 KB);
 las capturas se cargan en diferido al acercarse.
 
 ## Ver en local
@@ -134,11 +134,11 @@ $GAME/tools/godot.sh --path $GAME --script $PWD/tools/godot/render_parking_layer
 
 python tools/build_hero.py $OUT $GAME      # versión nocturna del parqueo, con la paleta maestra
 python tools/build_assets.py $OUT $GAME    # capturas x2 WebP, plano, pines, iconos, OG
-python tools/build_fonts.py $GAME          # Geist Pixel recortada + glifo ₡
+python tools/build_fonts.py $GAME          # Geist Pixel (estatica, pixeles fundidos) + bombillas + glifo ₡
 python tools/snippets.py                   # (solo si se rehacen las portadas desde cero)
 ```
 
-`tools/` necesita Python 3.12 con Pillow, NumPy, SciPy y fontTools (con brotli).
+`tools/` necesita Python 3.12 con Pillow, NumPy, SciPy, fontTools (con brotli) y skia-pathops.
 
 ## Licencias del arte en la web
 
