@@ -1,2 +1,3 @@
-Los trailers van aqui: trailer_es.mp4 y trailer_en.mp4 (H.264, 1920x1080 o 1280x720).
-No se versionan videos pesados en git sin pensarlo; ver README.md, seccion Trailer.
+Trailers del juego: trailer_es.mp4 y trailer_en.mp4.
+H.264 High 1920x1080 60 fps + AAC 48 kHz, 86,25 s, faststart (moov al principio).
+Vienen de game-video/out/. El poster sale de tools/build_poster.py (segundo 16).

@@ -204,23 +204,23 @@
 					<h2 id="trailer-title" class="reveal">Every night he comes for his cut.</h2>
 				</header>
 
-				<!-- TRAILER: el video vive en /media/trailer_en.mp4 (no esta en el repo hasta que exista).
-				     El poster es una captura real del juego. preload="none": no se descarga nada hasta
-				     que alguien pulsa reproducir. -->
-				<div class="screen" data-soon="The trailer is coming soon">
+				<!-- TRAILER: /media/trailer_en.mp4 (35 MB, H.264 1080p60). El poster es su fotograma del
+				     segundo 16 (tools/build_poster.py). preload="none": no se descarga nada hasta que
+				     alguien pulsa reproducir; sin autoplay. -->
+				<div class="screen" data-soon="Trailer unavailable">
 					<div class="screen__inner">
 						<video controls preload="none" playsinline poster="/assets/img/shots/poster-trailer.webp" aria-label="Just One More Bet trailer">
 							<source src="/media/trailer_en.mp4" type="video/mp4">
 						</video>
-						<img class="screen__poster" src="/assets/img/shots/poster-trailer.webp" width="1280" height="720" loading="lazy" decoding="async" alt="">
+						<img class="screen__poster" src="/assets/img/shots/poster-trailer.webp" srcset="/assets/img/shots/poster-trailer-1x.webp 640w, /assets/img/shots/poster-trailer.webp 1280w" sizes="(max-width: 1080px) 100vw, 1000px" width="1280" height="720" loading="lazy" decoding="async" alt="">
 						<button class="screen__play" type="button">
 							<span class="chip-play" aria-hidden="true"><svg viewBox="0 0 8 10" shape-rendering="crispEdges"><path fill="#fffce5" d="M0 0h2v1h2v1h2v1h2v4H6v1H4v1H2v1H0z"/></svg></span>
 							<span class="screen__label">Play trailer</span>
 						</button>
-						<p class="screen__note" hidden>The trailer is in production. Meanwhile, take a look at the casino below.</p>
+						<p class="screen__note" hidden>The trailer couldn’t load. Try again later or watch it on itch.io.</p>
 					</div>
 				</div>
-				<p class="trailer__meta">The video only downloads when you play it. It has sound.</p>
+				<p class="trailer__meta">1 min 26 s · 35 MB · It has sound. The video only downloads when you play it.</p>
 			</div>
 		</section>
 

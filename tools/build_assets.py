@@ -49,7 +49,6 @@ SHOTS = {
     "sala-caja": "s777_room_cashier_room.png",
     "sala-fumadores": "s777_room_smoking_room.png",
     "sala-parqueo": "s777_parking.png",
-    "poster-trailer": "clean_intro_4_10.0.png",
 }
 
 PINS = [

@@ -3,7 +3,7 @@
 Recorre todas las paginas .html y el CSS, y verifica que cada ruta interna exista en disco
 (con las reglas de `cleanUrls` de Vercel: `/privacidad` sirve `privacidad/index.html`) y que
 cada ancla `#id` exista en su pagina. Los marcadores pendientes (`#ITCH_URL`) y los videos del
-trailer, que llegan despues, se listan aparte como avisos, no como errores.
+trailer cuando todavia no estaban, se listaban aparte como avisos (`PENDING_FILES`).
 
 Uso: python tools/check_links.py   (sale con 1 si hay algo roto)
 """
@@ -17,8 +17,9 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 PENDING = {"#ITCH_URL"}
-PENDING_FILES = {"/media/trailer_es.mp4", "/media/trailer_en.mp4"}
-ATTRS = {"href", "src", "poster", "data-full", "data-shot"}
+# Archivos que llegan despues del resto del sitio. Vacio desde que estan los trailers.
+PENDING_FILES: set[str] = set()
+ATTRS = {"href", "src", "poster", "data-full", "data-shot"}  # <source src> incluido
 
 
 class Collector(HTMLParser):

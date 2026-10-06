@@ -29,12 +29,12 @@ assets/img/pins/        los 32 pines del juego (arte propio, 16x16)
 assets/img/og/          imágenes para redes, 1200x630, ES y EN
 assets/img/icons/       favicon (ficha de casino en pixel art) en SVG, PNG e ICO
 content/                el texto de la política de privacidad en Markdown (ES y EN)
-media/                  aquí van los tráilers (no están en el repo todavía)
+media/                  los tráilers: trailer_es.mp4 y trailer_en.mp4 (35 MB cada uno)
 tools/                  scripts que generan los assets (no se despliegan: .vercelignore)
 vercel.json             cleanUrls, cabeceras de seguridad y caché
 ```
 
-Peso total sin video: **~1,5 MB**. La portada carga primero el hero (~60 KB) y las fuentes (~20 KB);
+Peso total: **~1,5 MB** sin los tráilers y ~71 MB con ellos (solo se descargan si se reproducen). La portada carga primero el hero (~60 KB) y las fuentes (~20 KB);
 las capturas se cargan en diferido al acercarse.
 
 ## Ver en local
@@ -50,7 +50,6 @@ python -m http.server  # /privacidad/ y /en/ funcionan con la barra final
 | Marcador | Dónde | Qué poner |
 |---|---|---|
 | `#ITCH_URL` | todas las páginas (botones "Jugar") | la URL de la página de itch.io. Buscar y reemplazar en los `.html` |
-| `/media/trailer_es.mp4` y `/media/trailer_en.mp4` | `index.html` y `en/index.html`, sección Tráiler | el video. Ver abajo |
 | `https://just-one-more-bet-web.vercel.app` | `canonical`, `hreflang`, Open Graph, `sitemap.xml`, `robots.txt` | el dominio final, si cambia. Buscar y reemplazar |
 
 Para comprobar que no queda ningún enlace interno roto (y listar los marcadores):
@@ -61,14 +60,23 @@ python tools/check_links.py
 
 ### Tráiler
 
-El `<video>` usa `preload="none"`: no se descarga nada hasta que alguien pulsa reproducir. Si el
-archivo todavía no existe, el botón dice "El tráiler llega pronto" en vez de fallar.
+`media/trailer_es.mp4` y `media/trailer_en.mp4`: H.264 High 1920x1080 a 60 fps, AAC 48 kHz,
+86,25 s, ~35 MB cada uno, con `moov` al principio (empiezan a reproducirse sin bajar el archivo
+entero). Vienen de `game-video/out/`. Están en git porque quedan por debajo del aviso de 50 MB
+por archivo de GitHub; si una versión futura pasa de ~50 MB, mejor alojarla fuera (por ejemplo,
+un *release* de GitHub), cambiar el `src` del `<source>` y añadir ese dominio a `media-src` en la
+CSP de `vercel.json`.
 
-1. Copiar `trailer_es.mp4` y `trailer_en.mp4` (H.264 + AAC, 1080p o 720p) a `media/`.
-2. Si pesan más de ~50 MB, mejor no versionarlos en git: súbelos a otro sitio (por ejemplo,
-   un *release* de GitHub o el propio itch.io) y cambia el `src` del `<source>` por esa URL
-   (y añade su dominio a `media-src` en la cabecera `Content-Security-Policy` de `vercel.json`).
-3. El póster es `assets/img/shots/poster-trailer.webp`, una captura real de la intro.
+El `<video>` lleva `controls`, `preload="none"` y ningún `autoplay`: no se descarga nada hasta que
+alguien pulsa reproducir. Si el archivo no carga, el botón dice «Tráiler no disponible».
+
+El póster (`assets/img/shots/poster-trailer.webp` y `-1x.webp`) es el fotograma del segundo 16
+del propio tráiler, el parqueo con el león, igual en ES y en EN. Se devuelve a su pixel art
+nativo de 640x360 y se guarda x2 en WebP sin pérdida:
+
+```bash
+python tools/build_poster.py ../game-video/out/trailer_es.mp4 16
+```
 
 ### Política de privacidad
 
