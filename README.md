@@ -27,7 +27,9 @@ assets/img/shots/       capturas reales del juego, x2 vecino más cercano, WebP 
 assets/img/map/         el plano entero del casino de la semilla 777
 assets/img/pins/        los 32 pines del juego (arte propio, 16x16)
 assets/img/og/          imágenes para redes, 1200x630, ES y EN
-assets/img/icons/       favicon (ficha de casino en pixel art) en SVG, PNG e ICO
+assets/img/logo/        el logo del juego (64x64) y su tira de giro de 8 cuadros
+assets/img/icons/       favicon e iconos de app, hechos del logo (PNG e ICO)
+assets/js/menu.js       cierra el menu de la cabecera (popover nativo) al elegir un enlace
 content/                el texto de la política de privacidad en Markdown (ES y EN)
 media/                  los tráilers: trailer_es.mp4 y trailer_en.mp4 (35 MB cada uno)
 tools/                  scripts que generan los assets (no se despliegan: .vercelignore)
@@ -142,6 +144,7 @@ $GAME/tools/godot.sh --path $GAME --script $PWD/tools/godot/render_parking_layer
 
 python tools/build_hero.py $OUT $GAME      # versión nocturna del parqueo, con la paleta maestra
 python tools/build_assets.py $OUT $GAME    # capturas x2 WebP, plano, pines, iconos, OG
+python tools/build_logo.py $GAME           # logo, giro, favicon e iconos de app desde assets/icons/branding
 python tools/build_fonts.py $GAME          # Geist Pixel (estatica, pixeles fundidos) + bombillas + glifo ₡
 python tools/snippets.py                   # (solo si se rehacen las portadas desde cero)
 ```
@@ -158,7 +161,9 @@ python tools/snippets.py                   # (solo si se rehacen las portadas de
   cartel derivan de arte generado con PixelLab y repintado a mano, ver `docs/CREDITS.md` del
   juego). La noche se pintó por script con los colores de `tools/art/master_palette.gpl`.
 - **Pines, moneda y humo**: arte propio del juego.
-- **Alfombra de fondo y favicon**: dibujados para la web con la paleta maestra.
+- **Logo y favicon**: el logo del juego (`assets/icons/branding/logo_final.png` y su animación),
+  arte de Walter y Samuel.
+- **Alfombra de fondo**: dibujada para la web con la paleta maestra.
 - **Geist Pixel**: SIL Open Font License 1.1 (`assets/fonts/OFL.txt`). El glifo ₡ (fuente
   `JOMB Colon`) es un derivado bajo la misma licencia.
 

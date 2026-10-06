@@ -30,13 +30,15 @@
 	<meta name="twitter:image:alt" content="The casino entrance at night: a giant golden lion whose mouth is the door.">
 
 	<link rel="icon" href="/favicon.ico" sizes="48x48">
-	<link rel="icon" href="/assets/img/icons/favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="/assets/img/icons/favicon-64.png" type="image/png" sizes="64x64">
+	<link rel="icon" href="/assets/img/icons/favicon-32.png" type="image/png" sizes="32x32">
 	<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
 	<link rel="manifest" href="/site.webmanifest">
 	<link rel="preload" href="/assets/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="/assets/fonts/geist-pixel-bulbs.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="/assets/img/hero/hero-back.webp" as="image" type="image/webp" fetchpriority="high">
 	<link rel="stylesheet" href="/assets/css/site.css">
+	<script src="/assets/js/menu.js" defer></script>
 	<script src="/assets/js/boot.js"></script>
 	<script src="/assets/js/site.js" defer></script>
 	<script type="application/ld+json">
@@ -65,20 +67,22 @@
 	<header class="topbar">
 		<div class="topbar__inner">
 			<a class="brand" href="/en" aria-label="Just One More Bet, home">
-				<img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated">
+				<img class="brand__logo" src="/assets/img/logo/logo-spin.png" alt="" width="64" height="64">
 				<span class="brand__name">JUST ONE MORE BET</span>
 			</a>
-			<nav class="topbar__nav" aria-label="Sections">
+			<nav class="topbar__nav" id="menu" popover aria-label="Sections">
 				<a href="#premise">The premise</a>
 				<a href="#trailer">Trailer</a>
 				<a href="#how-to-play">How to play</a>
 				<a href="#casino">The casino</a>
+				<a href="/en/privacy">Privacy</a>
 			</nav>
 			<div class="lang" role="group" aria-label="Language">
 				<a href="/" hreflang="es" lang="es">ES</a>
 				<span aria-current="true" lang="en">EN</span>
 			</div>
-			<a class="btn btn--small" href="#ITCH_URL">Play</a>
+			<a class="btn btn--small topbar__play" href="#ITCH_URL">Play</a>
+			<button class="menu-toggle" type="button" popovertarget="menu" aria-label="Menu"><span aria-hidden="true"></span></button>
 		</div>
 	</header>
 
@@ -220,7 +224,6 @@
 						<p class="screen__note" hidden>The trailer couldn’t load. Try again later or watch it on itch.io.</p>
 					</div>
 				</div>
-				<p class="trailer__meta">1 min 26 s · 35 MB · It has sound. The video only downloads when you play it.</p>
 			</div>
 		</section>
 
@@ -472,7 +475,7 @@
 		<div class="wrap">
 			<div class="footer__grid">
 				<div>
-					<a class="brand" href="/en"><img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated"><span>JUST ONE MORE BET</span></a>
+					<a class="brand brand--footer" href="/en"><img class="pixelated" src="/assets/img/logo/logo-64.png" alt="" width="128" height="128"><span>JUST ONE MORE BET</span></a>
 					<p style="margin-top:16px">A game by Walter Daniel Mejía Palacios and Samuel Fernando Calderón Reyes.</p>
 					<p>Made with Godot Engine.</p>
 				</div>

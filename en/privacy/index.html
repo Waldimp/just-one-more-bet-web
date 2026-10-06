@@ -20,10 +20,12 @@
 	<meta property="og:image" content="https://just-one-more-bet-web.vercel.app/assets/img/og/og-en.png">
 	<meta name="twitter:card" content="summary_large_image">
 	<link rel="icon" href="/favicon.ico" sizes="48x48">
-	<link rel="icon" href="/assets/img/icons/favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="/assets/img/icons/favicon-64.png" type="image/png" sizes="64x64">
+	<link rel="icon" href="/assets/img/icons/favicon-32.png" type="image/png" sizes="32x32">
 	<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
 	<link rel="manifest" href="/site.webmanifest">
 	<link rel="stylesheet" href="/assets/css/site.css">
+	<script src="/assets/js/menu.js" defer></script>
 </head>
 <body>
 	<a class="skip-link" href="#contenido">Skip to content</a>
@@ -31,18 +33,22 @@
 	<header class="topbar is-solid">
 		<div class="topbar__inner">
 			<a class="brand" href="/en" aria-label="Just One More Bet, home">
-				<img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated">
+				<img class="brand__logo" src="/assets/img/logo/logo-spin.png" alt="" width="64" height="64">
 				<span class="brand__name">JUST ONE MORE BET</span>
 			</a>
-			<nav class="topbar__nav" aria-label="Site">
-				<a href="/en">Home</a>
-				<a href="/en/credits">Credits</a>
+			<nav class="topbar__nav" id="menu" popover aria-label="Sections">
+				<a href="/en#premise">The premise</a>
+				<a href="/en#trailer">Trailer</a>
+				<a href="/en#how-to-play">How to play</a>
+				<a href="/en#casino">The casino</a>
+				<a href="/en/privacy" aria-current="page">Privacy</a>
 			</nav>
 			<div class="lang" role="group" aria-label="Language">
 				<a href="/privacidad" hreflang="es" lang="es">ES</a>
 				<span aria-current="true" lang="en">EN</span>
 			</div>
-			<a class="btn btn--small" href="#ITCH_URL">Play</a>
+			<a class="btn btn--small topbar__play" href="#ITCH_URL">Play</a>
+			<button class="menu-toggle" type="button" popovertarget="menu" aria-label="Menu"><span aria-hidden="true"></span></button>
 		</div>
 	</header>
 
@@ -104,7 +110,7 @@
 		<div class="wrap">
 			<div class="footer__grid">
 				<div>
-					<a class="brand" href="/en"><img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated"><span>JUST ONE MORE BET</span></a>
+					<a class="brand brand--footer" href="/en"><img class="pixelated" src="/assets/img/logo/logo-64.png" alt="" width="128" height="128"><span>JUST ONE MORE BET</span></a>
 					<p style="margin-top:16px">A game by Walter Daniel Mejía Palacios and Samuel Fernando Calderón Reyes.</p>
 				</div>
 				<div>

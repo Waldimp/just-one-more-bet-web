@@ -57,7 +57,7 @@
 	--font-bulbs: "Geist Pixel Bulbs", "Geist Pixel", "JOMB Colon", ui-monospace, monospace;
 	--wrap: 1200px;
 	--gutter: clamp(16px, 4vw, 40px);
-	--topbar-h: 60px;
+	--topbar-h: 72px;
 	--step: 4px;
 	--ease-out: cubic-bezier(.2, .8, .2, 1);
 	--ease-snap: cubic-bezier(.5, 0, .2, 1.4);
@@ -302,6 +302,9 @@ a:hover {
 
 /* ---------------------------------------------------------------- Barra superior */
 
+/* La barra mide lo que el logo del juego a x1 (64 px) mas 4 px por lado: a x0.5 la letra de la
+ * ficha no se lee con ningun filtro, asi que la barra crece en vez de encoger el logo. */
+
 .topbar {
 	position: fixed;
 	inset: 0 0 auto;
@@ -328,7 +331,8 @@ a:hover {
 .brand {
 	display: inline-flex;
 	align-items: center;
-	gap: 10px;
+	gap: 12px;
+	flex: none;
 	color: var(--gold);
 	text-decoration: none;
 	font-size: 15px;
@@ -336,15 +340,52 @@ a:hover {
 	white-space: nowrap;
 }
 
-.brand img {
-	width: 32px;
-	height: 32px;
+/* La ficha: una tira de 8 cuadros vista por una ventana de 64x64. Gira una vez al cargar y otra
+ * cada vez que se pasa por encima o se enfoca. */
+.brand__logo {
+	flex: none;
+	width: 64px;
+	height: 64px;
+	max-width: none;
+	object-fit: none;
+	object-position: 0 0;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+	/* Sin fill-mode: al acabar vuelve al cuadro 0, el logo quieto (el final de la tira, -512 px,
+	 * ya cae fuera de ella). */
+	animation: chip-spin-load .8s steps(8) 1.6s 1;
 }
 
+.brand:hover .brand__logo,
+.brand:focus-visible .brand__logo {
+	animation: chip-spin .8s steps(8) 1;
+}
+
+@keyframes chip-spin-load {
+	from { object-position: 0 0; }
+	to { object-position: -512px 0; }
+}
+
+@keyframes chip-spin {
+	from { object-position: 0 0; }
+	to { object-position: -512px 0; }
+}
+
+/* El menu es un popover nativo: en pantalla ancha se muestra en linea y el atributo no hace nada;
+ * en estrecha lo abre la hamburguesa, sin JavaScript, y se cierra al tocar fuera o con Esc. */
 .topbar__nav {
 	display: flex;
 	gap: 22px;
-	margin-left: auto;
+	position: static;
+	inset: auto;
+	width: auto;
+	height: auto;
+	margin: 0 0 0 auto;
+	padding: 0;
+	overflow: visible;
+	border: 0;
+	background: none;
+	color: inherit;
 }
 
 .topbar__nav a {
@@ -352,14 +393,23 @@ a:hover {
 	font-size: 15px;
 	text-decoration: none;
 	letter-spacing: .06em;
+	white-space: nowrap;
 }
 
-.topbar__nav a:hover {
+.topbar__nav a:hover,
+.topbar__nav a[aria-current="page"] {
 	color: var(--gold-hi);
+}
+
+.topbar__nav a[aria-current="page"] {
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 6px;
 }
 
 .lang {
 	display: inline-flex;
+	flex: none;
 	border: 2px solid var(--brass);
 	font-size: 14px;
 }
@@ -376,17 +426,93 @@ a:hover {
 	color: var(--ink);
 }
 
-@media (max-width: 860px) {
-	.topbar__nav {
+.topbar__play {
+	flex: none;
+	white-space: nowrap;
+}
+
+.menu-toggle {
+	display: none;
+	flex: none;
+	place-items: center;
+	width: 44px;
+	height: 40px;
+	padding: 0;
+	border: 0;
+	background: var(--ink);
+	color: var(--gold-hi);
+	cursor: pointer;
+	box-shadow: inset 0 0 0 2px var(--gold), 0 4px 0 0 #000;
+}
+
+/* Tres barras de pixel: la de en medio es el elemento, las otras dos sus sombras. */
+.menu-toggle span {
+	width: 20px;
+	height: 4px;
+	background: currentColor;
+	box-shadow: 0 -7px 0 currentColor, 0 7px 0 currentColor;
+}
+
+.menu-toggle:hover {
+	background: var(--wine-2);
+}
+
+/* Sin el nombre al lado: la ficha ya lo lleva escrito. */
+@media (max-width: 1179px) {
+	.brand__name {
 		display: none;
+	}
+}
+
+/* Por debajo de esto el menu no cabe en linea en ES ni en EN: pasa a la hamburguesa. */
+@media (max-width: 1023px) {
+	.menu-toggle {
+		display: grid;
 	}
 
 	.lang {
 		margin-left: auto;
 	}
 
-	.brand__name {
+	.topbar__nav:not(:popover-open) {
 		display: none;
+	}
+
+	.topbar__nav:popover-open {
+		position: fixed;
+		inset: var(--topbar-h) 0 auto auto;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		width: min(100vw, 340px);
+		margin: 0;
+		padding: 10px 0 14px;
+		background: rgb(19 13 16 / .98);
+		box-shadow: inset 0 2px 0 var(--wine-2), inset 2px 0 0 var(--wine-2), 0 4px 0 rgb(0 0 0 / .5);
+	}
+
+	.topbar__nav:popover-open::backdrop {
+		background: rgb(6 8 13 / .55);
+	}
+
+	.topbar__nav:popover-open a {
+		padding: 12px var(--gutter);
+		font-size: 18px;
+	}
+
+	.topbar__nav:popover-open a:hover,
+	.topbar__nav:popover-open a:focus-visible {
+		background: var(--wine-1);
+	}
+}
+
+@media (max-width: 420px) {
+	.topbar__inner {
+		gap: 12px;
+	}
+
+	.topbar__play {
+		padding-inline: 10px;
 	}
 }
 
@@ -1283,15 +1409,6 @@ p {
 .screen.is-playing .screen__poster {
 	display: none;
 }
-
-.trailer__meta {
-	margin: 26px auto 0;
-	max-width: 1040px;
-	color: var(--sand);
-	font-size: 15px;
-	text-align: center;
-}
-
 /* ---------------------------------------------------------------- Un dia en el casino */
 
 .day {
@@ -2050,6 +2167,17 @@ p {
 	}
 }
 
+.brand--footer {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 14px;
+}
+
+.brand--footer img {
+	width: 128px;
+	height: 128px;
+}
+
 .footer h2 {
 	margin: 0 0 12px;
 	font-size: 14px;
@@ -2406,5 +2534,11 @@ p {
 	.coins,
 	.hero__enter svg {
 		display: none;
+	}
+
+	.brand__logo,
+	.brand:hover .brand__logo,
+	.brand:focus-visible .brand__logo {
+		animation: none;
 	}
 }

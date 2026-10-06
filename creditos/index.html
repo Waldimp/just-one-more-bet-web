@@ -20,10 +20,12 @@
 	<meta property="og:image" content="https://just-one-more-bet-web.vercel.app/assets/img/og/og-es.png">
 	<meta name="twitter:card" content="summary_large_image">
 	<link rel="icon" href="/favicon.ico" sizes="48x48">
-	<link rel="icon" href="/assets/img/icons/favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="/assets/img/icons/favicon-64.png" type="image/png" sizes="64x64">
+	<link rel="icon" href="/assets/img/icons/favicon-32.png" type="image/png" sizes="32x32">
 	<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
 	<link rel="manifest" href="/site.webmanifest">
 	<link rel="stylesheet" href="/assets/css/site.css">
+	<script src="/assets/js/menu.js" defer></script>
 </head>
 <body>
 	<a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -31,18 +33,22 @@
 	<header class="topbar is-solid">
 		<div class="topbar__inner">
 			<a class="brand" href="/" aria-label="Just One More Bet, inicio">
-				<img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated">
+				<img class="brand__logo" src="/assets/img/logo/logo-spin.png" alt="" width="64" height="64">
 				<span class="brand__name">JUST ONE MORE BET</span>
 			</a>
-			<nav class="topbar__nav" aria-label="Sitio">
-				<a href="/">Inicio</a>
+			<nav class="topbar__nav" id="menu" popover aria-label="Secciones">
+				<a href="/#premisa">La premisa</a>
+				<a href="/#trailer">Tráiler</a>
+				<a href="/#como-se-juega">Cómo se juega</a>
+				<a href="/#casino">El casino</a>
 				<a href="/privacidad">Privacidad</a>
 			</nav>
 			<div class="lang" role="group" aria-label="Idioma">
 				<span aria-current="true" lang="es">ES</span>
 				<a href="/en/credits" hreflang="en" lang="en">EN</a>
 			</div>
-			<a class="btn btn--small" href="#ITCH_URL">Jugar</a>
+			<a class="btn btn--small topbar__play" href="#ITCH_URL">Jugar</a>
+			<button class="menu-toggle" type="button" popovertarget="menu" aria-label="Menú"><span aria-hidden="true"></span></button>
 		</div>
 	</header>
 
@@ -86,6 +92,7 @@
 			</ul>
 
 			<h2>Arte propio</h2>
+			<p>El logo —la ficha de póker con «just one more bet» y su animación de giro— es arte del propio juego, de Walter Daniel Mejía Palacios y Samuel Fernando Calderón Reyes. Es el que usan esta web y su favicon.</p>
 			<p>La fachada del casino con su león, el cartel de Las Vegas, el parqueo, los pines, la mesa de blackjack, la comida, el humo, los carteles y buena parte de los objetos son arte del equipo, dibujado a mano. Algunas piezas de fondo —la barra, el mostrador de comida, las escenas de la introducción y los caballos— se generaron con PixelLab y se retocaron a mano.</p>
 			<p>La versión nocturna del parqueo que abre esta web se montó a partir del arte del juego, con su misma paleta.</p>
 
@@ -129,7 +136,7 @@
 		<div class="wrap">
 			<div class="footer__grid">
 				<div>
-					<a class="brand" href="/"><img src="/assets/img/icons/favicon.svg" alt="" width="32" height="32" class="pixelated"><span>JUST ONE MORE BET</span></a>
+					<a class="brand brand--footer" href="/"><img class="pixelated" src="/assets/img/logo/logo-64.png" alt="" width="128" height="128"><span>JUST ONE MORE BET</span></a>
 					<p style="margin-top:16px">Un juego de Walter Daniel Mejía Palacios y Samuel Fernando Calderón Reyes.</p>
 				</div>
 				<div>

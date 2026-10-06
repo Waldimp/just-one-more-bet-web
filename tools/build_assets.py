@@ -10,7 +10,7 @@ Salidas (en `assets/img/`):
   pins/pins.png    los 32 pines del juego (arte propio, 16x16) en una hoja de 8x4
   ui/coin.png      la moneda de la lluvia de victoria (arte propio, 4 cuadros)
   ui/carpet.png    baldosa de alfombra dibujada para la web con la paleta maestra
-  icons/*          favicon en SVG, PNG e ICO
+  (el logo, el favicon y los iconos de app salen de tools/build_logo.py)
   og/og-es.png, og-en.png  1200x630 para redes, montadas sobre el hero nocturno
 
 Uso: python tools/build_assets.py <capturas> <juego>
@@ -141,60 +141,6 @@ def build_carpet() -> None:
     im.save(IMG / "ui" / "carpet.png", optimize=True)
 
 
-CHIP = [
-    "....wwrrrrww....",
-    "..rrwwrrrrwwrr..",
-    ".rrrrrrrrrrrrrr.",
-    ".rrrrggggggrrrr.",
-    "wwrrgggggggggrww",
-    "wwrggrrrrrrggrww",
-    "rrrggrrrrrrggrrr",
-    "rrrggrrrrrrggrrr",
-    "rrrggrrrrrrggrrr",
-    "rrrggrrrrrrggrrr",
-    "wwrggrrrrrrggrww",
-    "wwrrgggggggggrww",
-    ".rrrrggggggrrrr.",
-    ".rrrrrrrrrrrrrr.",
-    "..rrwwrrrrwwrr..",
-    "....wwrrrrww....",
-]
-CHIP_COLORS = {"r": RED, "w": CREAM, "g": GOLD}
-
-
-def chip_image(scale: int, pad: int = 0, bg: tuple | None = None) -> Image.Image:
-    size = 16 * scale + pad * 2
-    im = Image.new("RGBA", (size, size), (*bg, 255) if bg else (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    for y, row in enumerate(CHIP):
-        for x, ch in enumerate(row):
-            if ch in CHIP_COLORS:
-                x0, y0 = pad + x * scale, pad + y * scale
-                d.rectangle([x0, y0, x0 + scale - 1, y0 + scale - 1], fill=CHIP_COLORS[ch])
-    # contorno oscuro de 1 px de arte para que se lea sobre fondos claros
-    return im
-
-
-def build_icons() -> None:
-    out = IMG / "icons"
-    out.mkdir(parents=True, exist_ok=True)
-    rects = []
-    for y, row in enumerate(CHIP):
-        for x, ch in enumerate(row):
-            if ch in CHIP_COLORS:
-                r, g, b = CHIP_COLORS[ch]
-                rects.append(f'<rect x="{x}" y="{y}" width="1" height="1" fill="#{r:02x}{g:02x}{b:02x}"/>')
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" '
-           'shape-rendering="crispEdges">' + "".join(rects) + "</svg>\n")
-    (out / "favicon.svg").write_text(svg, encoding="utf-8")
-    chip_image(2).save(out / "favicon-32.png", optimize=True)
-    chip_image(10, 10, WINE_0).save(out / "apple-touch-icon.png", optimize=True)  # 180
-    chip_image(10, 16, WINE_0).resize((192, 192), Image.NEAREST).save(out / "icon-192.png")
-    chip_image(28, 32, WINE_0).resize((512, 512), Image.NEAREST).save(out / "icon-512.png")
-    ico = chip_image(3)  # 48
-    ico.save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
-
-
 def geist(size: float, shape: str | None = None) -> ImageFont.FreeTypeFont:
     font = ImageFont.truetype(str(ROOT / "tools" / ".cache" / "GeistPixel.ttf"), size)
     if shape:
@@ -238,13 +184,21 @@ def build_og(game: Path) -> None:
         title = "JUST ONE MORE BET"
         f_title = geist(cell * 3, "Circle")
         tw = d.textlength(title, font=f_title)
-        x = (1200 - tw) / 2
-        d.text((x + 3, 30 + 3), title, font=f_title, fill=(*RED, 255))
-        d.text((x, 30), title, font=f_title, fill=(*GOLD, 255))
         f_tag = geist(cell * 1.5)
         tg = d.textlength(tag, font=f_tag)
-        d.text(((1200 - tg) / 2 + 3, 121), tag, font=f_tag, fill=(*INK, 255))
-        d.text(((1200 - tg) / 2, 118), tag, font=f_tag, fill=(*CREAM, 255))
+        # El logo del juego (la ficha) a x2 a la izquierda del titulo; el grupo, centrado. Es la
+        # marca que se ve como favicon, asi que en la tarjeta de redes se reconoce lo mismo.
+        logo = x2(Image.open(game / "assets/icons/branding/logo_final.png").convert("RGBA"))
+        gap = 28
+        group = logo.width + gap + tw
+        lx = round((1200 - group) / 2)
+        im.alpha_composite(logo, (lx, 14))
+        x = lx + logo.width + gap
+        d.text((x + 3, 30 + 3), title, font=f_title, fill=(*RED, 255))
+        d.text((x, 30), title, font=f_title, fill=(*GOLD, 255))
+        tx = x + (tw - tg) / 2
+        d.text((tx + 3, 121), tag, font=f_tag, fill=(*INK, 255))
+        d.text((tx, 118), tag, font=f_tag, fill=(*CREAM, 255))
         # Placa del aviso abajo a la derecha.
         f_warn = geist(cell)
         ww = d.textlength(warn, font=f_warn)
@@ -265,7 +219,6 @@ def main() -> None:
     build_pins(game)
     build_sprites(game)
     build_carpet()
-    build_icons()
     build_og(game)
     total = sum(f.stat().st_size for f in IMG.rglob("*") if f.is_file())
     print(f"assets/img: {total / 1024:.0f} KB")
